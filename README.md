@@ -1,192 +1,493 @@
-# API de Filmes - Trabalho de Gestão de Configuração
+# 🎬 DevOps API Filmes
 
-[![Docker](https://badgen.net/badge/icon/Docker?icon=docker&label)](https://hub.docker.com/r/joelmirsiqueira/api-filmes-gc2)
+[![CI Docker](https://github.com/jalmirsiqueira3/devops-api-filmes/actions/workflows/ci-docker.yaml/badge.svg)](https://github.com/jalmirsiqueira3/devops-api-filmes/actions/workflows/ci-docker.yaml)
+[![CI ESLint](https://github.com/jalmirsiqueira3/devops-api-filmes/actions/workflows/ci-eslint.yaml/badge.svg)](https://github.com/jalmirsiqueira3/devops-api-filmes/actions/workflows/ci-eslint.yaml)
 
-Este é um projeto simples de uma API para gerenciar filmes, desenvolvido como parte da disciplina de Gestão de Configuração de Software 2.
+[![Node.js](https://img.shields.io/badge/Node.js-24%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Express](https://img.shields.io/badge/Express-5.0%2B-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![Vitest](https://img.shields.io/badge/Vitest-Testing-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![ESLint](https://img.shields.io/badge/ESLint-Code%20Quality-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
+[![Prettier](https://img.shields.io/badge/Prettier-Code%20Formatter-F7B93E?logo=prettier&logoColor=black)](https://prettier.io/)
 
-## Execução local
+[![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+[![Ansible](https://img.shields.io/badge/Ansible-Automation-EE0000?logo=ansible&logoColor=white)](https://www.ansible.com/)
+[![Vagrant](https://img.shields.io/badge/Vagrant-Infrastructure-1868F2?logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
+[![VirtualBox](https://img.shields.io/badge/VirtualBox-7.0%2B-183A61?logo=virtualbox&logoColor=white)](https://www.virtualbox.org/)
+[![Netdata](https://img.shields.io/badge/Netdata-Monitoring-00AB44?logo=netdata&logoColor=white)](https://www.netdata.cloud/)
 
-Estas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
+Projeto desenvolvido para a disciplina de **Gestão de Configuração de Software 2**, com foco na aplicação prática de conceitos e ferramentas de **DevOps, automação de infraestrutura, conteinerização e monitoramento**.
 
-### Pré-requisitos
+A aplicação consiste em uma API REST simples para gerenciamento de filmes, utilizada como base para a implementação de uma infraestrutura automatizada utilizando **Docker, Vagrant e Ansible**, além de monitoramento e alertas com **Netdata**.
 
-O que você precisa para instalar o software:
+---
 
-*   [Node.js](https://nodejs.org/en/)
-*   [npm](https://www.npmjs.com/) (geralmente vem com o Node.js)
+## 🎯 Sobre o Projeto
 
-### Instalação e Execução (local)
+O objetivo principal do projeto foi aplicar, de forma prática, conceitos relacionados ao processo de desenvolvimento e operação de aplicações.
 
-Um passo a passo que te diz como ter um ambiente de desenvolvimento rodando:
+Ao longo do desenvolvimento, diferentes tecnologias foram incorporadas ao projeto, permitindo construir um fluxo que vai desde a execução local da API até o provisionamento automatizado da infraestrutura e o monitoramento da aplicação.
 
-**1. Clone o repositório:**
+O projeto contempla:
 
-```bash
-git clone https://github.com/joelmirsiqueira/api-filmes.git
+* Desenvolvimento de uma API REST com Node.js.
+* Conteinerização da aplicação utilizando Docker.
+* Criação e gerenciamento de máquinas virtuais utilizando Vagrant.
+* Provisionamento e configuração automatizada utilizando Ansible.
+* Monitoramento da infraestrutura utilizando Netdata.
+* Configuração de alertas para utilização de CPU.
+* Testes de carga utilizando `stress-ng`.
+* Organização do desenvolvimento utilizando GitLab Flow.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+### Desenvolvimento
+
+* **Node.js**
+* **JavaScript/TypeScript**
+* **npm**
+
+### DevOps e Infraestrutura
+
+* **Docker**
+* **Vagrant**
+* **Ansible**
+* **VirtualBox**
+
+### Monitoramento
+
+* **Netdata**
+* **stress-ng**
+* **mailutils**
+
+### Versionamento
+
+* **Git**
+* **GitLab Flow**
+
+---
+
+## ✨ Destaques
+
+* API REST desenvolvida com Node.js, TypeScript e Express.
+* Testes automatizados com Vitest e cobertura de código.
+* Imagem Docker para execução reproduzível.
+* Provisionamento automatizado com Vagrant e Ansible.
+* Monitoramento de infraestrutura com Netdata.
+* Pipeline de integração contínua com GitHub Actions.
+
+---
+
+## 🏗️ Arquitetura
+
+A infraestrutura foi organizada utilizando duas máquinas virtuais provisionadas pelo Vagrant.
+
+```text
+                         ┌─────────────────────┐
+                         │    Máquina Host     │
+                         │                     │
+                         │      Vagrant        │
+                         └──────────┬──────────┘
+                                    │
+                     ┌──────────────┴──────────────┐
+                     │                             │
+              ┌──────▼──────┐               ┌──────▼──────┐
+              │     VM1     │               │     VM2     │
+              │             │               │             │
+              │   Ansible   │               │   Netdata   │
+              │   Docker    │               │  stress-ng  │
+              │     API     │               │             │
+              └──────┬──────┘               └──────┬──────┘
+                     │                             │
+                     └────────── Monitoramento ────┘
 ```
 
-**2. Navegue até o diretório da API:**
-    
-```bash
-cd api-filmes
+### Responsabilidade das ferramentas
+
+| Tecnologia      | Responsabilidade                            |
+| --------------- | ------------------------------------------- |
+| **Node.js**     | Desenvolvimento da API                      |
+| **Docker**      | Conteinerização da aplicação                |
+| **Vagrant**     | Criação e gerenciamento das VMs             |
+| **Ansible**     | Provisionamento e configuração automatizada |
+| **Netdata**     | Monitoramento da infraestrutura             |
+| **stress-ng**   | Simulação de carga para testes              |
+| **GitLab Flow** | Organização do fluxo de desenvolvimento     |
+
+---
+
+## 📂 Estrutura do Projeto
+
+```text
+devops-api-filmes/
+│
+├── 📁 vagrant/
+│   ├── Vagrantfile
+│   ├── inventory.ini
+│   ├── configura-node.yaml
+│   └── 📁 data/
+│       └── configurar-monitoramento.yml
+│
+├── 📁 src/
+│
+├── 📁 tests/
+│
+├── 📄 Dockerfile
+├── 📄 package.json
+├── 📄 package-lock.json
+└── 📄 README.md
 ```
 
-**3. Instale as dependências do projeto:**
-    
-```bash
-npm install
-```
+### Principais componentes
 
-**4. Faça build do projeto**
-    
-```bash
-npm run build
-```
+* **`vagrant/`** — arquivos relacionados à criação e configuração das máquinas virtuais.
+* **`vagrant/data/`** — playbook utilizado para configuração do monitoramento.
+* **`src/`** — código-fonte da aplicação.
+* **`tests/`** — testes automatizados do projeto.
+* **`Dockerfile`** — definição da imagem utilizada para executar a API.
+* **`package.json`** — dependências e scripts da aplicação.
+* **`README.md`** — documentação do projeto.
 
-**5. Inicie o servidor:**
-    
-```bash
-npm start
-```
+---
 
-O servidor estará rodando em `http://localhost:3000` (ou na porta que você configurar).
+## 🐳 Conteinerização com Docker
 
-## Infraestrutura com Vagrant e Ansible
+A API foi configurada para ser executada utilizando **Docker**, permitindo que a aplicação seja executada em um ambiente isolado e reproduzível.
 
-### Requisitos:
+A imagem da aplicação é construída a partir do `Dockerfile` e posteriormente utilizada pela infraestrutura provisionada pelo Ansible.
 
-- VirtualBox
-- Vagrant
-- Ansible (será instalado na VM)
+Essa abordagem permite separar a aplicação do ambiente de execução e facilita sua implantação em diferentes máquinas.
 
-### Passo a Passo:
-**1. Iniciar as máquinas virtuais:**
+---
 
-No terminal da máquina hospedeira execute esse comando na pasta `api-filmes/vagrant` do projeto, ele vai baixar a Box necessária, configurar as redes privadas, sincronizar as pastas e instalar as dependências automaticamente.
+## 🖥️ Infraestrutura com Vagrant e Ansible
+
+Para simular um ambiente de infraestrutura real, foram utilizadas duas máquinas virtuais gerenciadas pelo **Vagrant**.
+
+O **Ansible** é utilizado para automatizar a configuração dessas máquinas, evitando a necessidade de realizar manualmente cada etapa de instalação e configuração.
+
+O playbook responsável pela configuração da aplicação realiza tarefas como:
+
+* Configuração do ambiente.
+* Instalação das dependências necessárias.
+* Clone do repositório da aplicação.
+* Construção da imagem Docker.
+* Execução da API em container.
+
+### Requisitos
+
+Para executar a infraestrutura localmente, é necessário possuir:
+
+* [VirtualBox](https://www.virtualbox.org/)
+* [Vagrant](https://www.vagrantup.com/)
+* [Git](https://git-scm.com/)
+
+O Ansible será utilizado dentro da infraestrutura provisionada.
+
+### Inicializando as máquinas virtuais
+
+Na máquina hospedeira, execute o comando a partir do diretório `vagrant`:
 
 ```bash
 vagrant up
 ```
 
-**2. Verificar Status das VMs:**
+O Vagrant irá criar as máquinas virtuais, configurar as redes privadas, sincronizar os diretórios e preparar o ambiente.
 
-Para ter a certeza que ambas as máquinas estão rodando, checar o status delas.
+Para verificar o estado das máquinas:
 
 ```bash
 vagrant status
 ```
 
-**3. Acessar a VM1:**
+---
 
-Entrar na máquina (VM1) via SSH:
+## ⚙️ Configuração da Aplicação com Ansible
+
+Após iniciar as máquinas, acesse a VM1:
 
 ```bash
 vagrant ssh vm1
 ```
 
-**4. Navegue para a pasta `/vagrant`:**
-
-Após entrar na VM1, navegue para a pasta `/vagrant` com o comando cd:
+Navegue até o diretório compartilhado:
 
 ```bash
 cd /vagrant
 ```
 
-**5. Execute o Playbook do Ansible:**
+Execute o playbook:
 
 ```bash
 ansible-playbook -i inventory.ini configura-node.yaml
 ```
 
-Confirme que quer continuar a conexão (caso seja solicitado) digite: `yes` e precione Enter.
+Caso seja solicitada confirmação para estabelecer a conexão SSH, confirme digitando:
 
-O playbook realiza a configuração do servidor, faz o clone do repositório da aplicação e executa a API utilizando Docker.
+```text
+yes
+```
 
-**6. Teste da Aplicação:**
+O playbook realiza automaticamente a configuração do ambiente, incluindo o clone da aplicação, construção da imagem Docker e execução da API.
 
-Para verificar se a aplicação está funcionando corretamente, execute na VM1:
+### Testando a API
+
+Após a configuração, a aplicação pode ser testada através da VM1:
 
 ```bash
 curl http://192.168.56.11:3000/filmes
 ```
 
-ou
+ou:
 
 ```bash
 wget -qO- http://192.168.56.11:3000/filmes
 ```
-se a configuração foi realizada com sucesso, a API retornará a lista de filmes em formato JSON.
 
+Se a configuração foi realizada corretamente, a API deverá retornar a lista de filmes em formato JSON.
 
-## Monitoramento com NetData
+---
 
-### Ferramenta Utilizadas (na VM):
+## 📊 Monitoramento com Netdata
 
-- Netdata
-- mailutils
-- stress-ng
+O projeto utiliza **Netdata** para monitorar os recursos da infraestrutura.
 
-### Passo a passo:
+Foram configurados:
 
-Certifique-se de ainda está na VM1 e com teminal na pasta `/vagrant`.
+* Monitoramento de utilização da CPU.
+* Limite de utilização de CPU.
+* Alertas automáticos.
+* Envio de notificações por e-mail.
 
-**1. Execute o Playbook de monitoramento:**
+### Ferramentas utilizadas
+
+* Netdata
+* mailutils
+* stress-ng
+
+### Configuração do monitoramento
+
+A partir da VM1, no diretório `/vagrant`, execute:
 
 ```bash
 ansible-playbook -i inventory.ini data/configurar-monitoramento.yml
 ```
 
-O playbook instala as ferramentas e faz as configurações necessárias para o monitoramento.
+O playbook realiza a instalação e configuração das ferramentas necessárias para o monitoramento.
 
-**2. Sair da VM1:**
+---
 
-Para testar o alerta é necessário sair da VM1 e acessar a VM2 via ssh. Para sair da VM1 execute:
+## 🔥 Teste de carga
+
+Para validar o funcionamento do monitoramento e dos alertas, foi utilizado o `stress-ng` para gerar carga artificial de CPU.
+
+Primeiro, saia da VM1:
 
 ```bash
 exit
 ```
 
-**3. Acessar a VM2:**
-
-Para acessar a VM2 execute:
+Acesse a VM2:
 
 ```bash
 vagrant ssh vm2
 ```
 
-**3. Testando o alerta:**
-
-Execute esse comando para utilizar o stress-ng:
+Execute:
 
 ```bash
 stress-ng --cpu 4 --cpu-load 85 --timeout 15s
 ```
 
-O consumo de CPU ultrapassará 80%.
+O comando gera uma carga de CPU superior ao limite configurado para o alerta.
 
-O alerta poderá ser visualizado no painel web do Netdata acessando http://192.168.56.11:19999 pelo seu navegador web da maquina host.
+O monitoramento pode ser acompanhado através da interface web do Netdata:
 
-**7. Alertas:**
+```text
+http://192.168.56.11:19999
+```
+
+O endereço pode ser acessado pelo navegador da máquina hospedeira.
+
+### 🚨 Alertas
 
 Foi configurado um alerta para:
 
-- CPU acima de 80%
+* **CPU acima de 80%**
 
-Quando o limite for atingido, o Netdata enviará um e-mail para o destinatário configurado em:
+Quando o limite é atingido, o Netdata realiza o envio de um e-mail para o destinatário configurado no arquivo:
 
-`/etc/netdata/health_alarm_notify.conf`
+```text
+/etc/netdata/health_alarm_notify.conf
+```
 
-## 📖 Rotas da API
+---
 
-A API possui as seguintes rotas:
+## 🧪 Testes
 
-*   **GET `/filmes`**: Retorna uma lista de todos os filmes.
-*   **POST `/filmes`**: Adiciona um novo filme à lista. O corpo da requisição deve ser um JSON com os detalhes do filme. Ex: `{"titulo": "O Poderoso Chefão", "ano": 1972}`.
+O projeto também possui testes automatizados para validar o comportamento da aplicação.
 
-## 🌊 Fluxo de Trabalho (Workflow)
+Os testes fazem parte do processo de desenvolvimento e ajudam a garantir que alterações realizadas na API não introduzam regressões.
 
-Este projeto utiliza o **GitLab Flow** como fluxo de trabalho de desenvolvimento. É um fluxo mais simples que o Git Flow, baseado em *feature branches* e ambientes múltiplos (produção, pré-produção, etc.), é mais adequado do que o github flow para projetos que tem pretensão de escalar rapidamente e que é mantido por mais de um dev.
+Para executar os testes:
 
-## Estudantes
-Joelmir & 
-Jalmir
+```bash
+npm test
+```
+
+Para gerar o relatório de cobertura:
+
+```bash
+npm run coverage
+```
+
+---
+
+## 📖 API
+
+A aplicação disponibiliza endpoints para gerenciamento de filmes.
+
+### GET `/filmes`
+
+Retorna a lista de filmes cadastrados.
+
+Exemplo:
+
+```http
+GET /filmes
+```
+
+Resposta `200 OK`:
+
+```json
+[
+  {
+    "id": 1,
+    "titulo": "O Poderoso Chefão",
+    "ano": 1972
+  }
+]
+```
+
+### POST `/filmes`
+
+Adiciona um novo filme.
+
+Exemplo:
+
+```http
+POST /filmes
+Content-Type: application/json
+```
+
+Corpo da requisição:
+
+```json
+{
+  "titulo": "O Poderoso Chefão",
+  "ano": 1972
+}
+```
+
+Resposta `201 Created`:
+
+```json
+{
+  "id": 1,
+  "titulo": "O Poderoso Chefão",
+  "ano": 1972
+}
+```
+
+### DELETE `/filmes/:id`
+
+Remove um filme pelo identificador.
+
+Exemplo:
+
+```http
+DELETE /filmes/1
+```
+
+Resposta `204 No Content` quando o filme é removido. Caso o identificador não exista, a API retorna `404 Not Found`.
+
+---
+
+## 🔄 Fluxo de Trabalho
+
+O projeto utiliza o **GitLab Flow** como estratégia de organização do desenvolvimento.
+
+O fluxo foi utilizado para separar o desenvolvimento de novas funcionalidades do código principal, permitindo maior organização durante a implementação das diferentes etapas do projeto.
+
+A adoção do fluxo também possibilitou trabalhar com branches e integração das alterações ao longo do desenvolvimento.
+
+---
+
+## 🚀 Execução Local
+
+Além da infraestrutura virtualizada, a API pode ser executada diretamente na máquina local para desenvolvimento e testes.
+
+### Pré-requisitos
+
+* [Node.js](https://nodejs.org/)
+* [npm](https://www.npmjs.com/)
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/jalmirsiqueira3/devops-api-filmes.git
+```
+
+### 2. Acesse o projeto
+
+```bash
+cd devops-api-filmes
+```
+
+### 3. Instale as dependências
+
+```bash
+npm install
+```
+
+### 4. Faça o build
+
+```bash
+npm run build
+```
+
+### 5. Inicie o servidor
+
+```bash
+npm start
+```
+
+A API estará disponível em:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## 🎓 Contexto Acadêmico
+
+Projeto desenvolvido para a disciplina de **Gestão de Configuração de Software 2**, com o objetivo de aplicar conceitos de automação, gerenciamento de configuração, infraestrutura e práticas de DevOps.
+
+O projeto foi desenvolvido em dupla e evoluiu incrementalmente conforme novas tecnologias e requisitos eram introduzidos na disciplina.
+
+---
+
+## 👨‍💻 Autores
+
+### Jalmir Siqueira
+
+* [GitHub](https://github.com/jalmirsiqueira3)
+* [LinkedIn](https://www.linkedin.com/in/jalmir-siqueira-a3221828a)
+
+### Joelmir Siqueira
+
+* [GitHub](https://github.com/joelmirsiqueira)
+* [LinkedIn](https://www.linkedin.com/in/joelmirsilva-de-siqueira-815a81332)
